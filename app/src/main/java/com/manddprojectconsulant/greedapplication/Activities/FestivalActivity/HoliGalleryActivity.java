@@ -22,12 +22,13 @@ import com.manddprojectconsulant.greedapplication.databinding.ActivityHoliGaller
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HoliGalleryActivity extends AppCompatActivity {
 
     ActivityHoliGalleryBinding holiGalleryBinding;
-    List<SubCategory>list;
+    List<SubCategory>list=new ArrayList<>();
 
 
     @Override

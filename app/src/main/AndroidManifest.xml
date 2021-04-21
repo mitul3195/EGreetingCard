@@ -11,6 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:hardwareAccelerated="false"
         android:theme="@style/Theme.Greed">
         <activity android:name=".Activities.DetailImageActivity"></activity>
         <activity android:name=".Activities.FestivalActivity.JanmashtamiGalleryActivity" />
