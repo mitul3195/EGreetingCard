@@ -1,2 +1,4 @@
-include ':app'
+include ':CommonLib'
+include ':adminside'
+include ':CustomerSide'
 rootProject.name = "GreedApplication"

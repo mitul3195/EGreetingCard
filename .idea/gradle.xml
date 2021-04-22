@@ -11,7 +11,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/CommonLib" />
+            <option value="$PROJECT_DIR$/CustomerSide" />
+            <option value="$PROJECT_DIR$/adminside" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
