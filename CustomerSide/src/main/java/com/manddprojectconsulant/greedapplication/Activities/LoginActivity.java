@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +25,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.manddprojectconsulant.greedapplication.PublicApi.APi;
 import com.manddprojectconsulant.greedapplication.R;
 
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,52 +66,83 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, APi.Login, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
 
 
-                        if (response.trim().equals("0")) {
-
-                            Toast.makeText(LoginActivity.this, "Fail please check username and password", Toast.LENGTH_SHORT).show();
-
-                        } else {
+                String username=username_text.getText().toString();
+                String password=password_text.getText().toString();
 
 
-                            Intent i = new Intent(LoginActivity.this, DashboardActivity.class);
-                            startActivity(i);
-                            Toast.makeText(LoginActivity.this, "Welcome to our Dashboard", Toast.LENGTH_SHORT).show();
+                if (username.equals("Admin")&& password.equals("admin@123"))
+                {
+
+                    Intent admin=new Intent(LoginActivity.this,AdminDashboardActivity.class);
+                    admin.putExtra("username",username);
+                    startActivity(admin);
+
+
+                }else{
+
+
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, APi.Login, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            Log.d("TAG", "onResponse: "+response.toString());
+
+
+
+
+                            if (response.trim().equals("0")) {
+
+                                Toast.makeText(LoginActivity.this, "Fail please check username and password", Toast.LENGTH_SHORT).show();
+
+                            } else {
+
+
+                                Intent i = new Intent(LoginActivity.this, DashboardActivity.class);
+                                startActivity(i);
+                                Toast.makeText(LoginActivity.this, "Welcome to our Dashboard", Toast.LENGTH_SHORT).show();
+                            }
+
+
                         }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            Toast.makeText(LoginActivity.this, "Fault in Internet" + error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    }) {
 
 
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                        @Nullable
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
 
-                        Toast.makeText(LoginActivity.this, "Fault in Internet" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                            HashMap map = new HashMap();
+                            map.put("uname", username_text.getText().toString());
+                            map.put("pass", password_text.getText().toString());
 
-                    }
-                }) {
+                            sharedPreferences.edit().putString("uname", String.valueOf(map)).apply();
+                            sharedPreferences.edit().putBoolean("s1", true).apply();
+
+                            return map;
+                        }
+                    };
+
+                    RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+                    queue.add(stringRequest);
 
 
-                    @Nullable
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
 
-                        HashMap map = new HashMap();
-                        map.put("uname", username_text.getText().toString());
-                        map.put("pass", password_text.getText().toString());
 
-                        sharedPreferences.edit().putString("uname", String.valueOf(map)).apply();
-                        sharedPreferences.edit().putBoolean("s1", true).apply();
+                }
 
-                        return map;
-                    }
-                };
 
-                RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-                queue.add(stringRequest);
+
+
+
 
             }
         });

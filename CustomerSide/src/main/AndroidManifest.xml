@@ -4,17 +4,19 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:hardwareAccelerated="false"
         android:theme="@style/Theme.Greed">
-        <activity android:name=".Activities.DetailImageActivity"></activity>
+        <activity android:name=".Activities.AdminDashboardActivity"></activity>
+        <activity android:name=".Activities.DetailImageActivity" />
         <activity android:name=".Activities.FestivalActivity.JanmashtamiGalleryActivity" />
         <activity android:name=".Activities.FestivalActivity.ChristmasGalleryActivity" />
         <activity android:name=".Activities.FestivalActivity.HoliGalleryActivity" />

@@ -54,6 +54,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         //SharedPreference
         sharedPreferences = getSharedPreferences("session", Context.MODE_PRIVATE);
+        Toast.makeText(this, "Username"+sharedPreferences.toString(), Toast.LENGTH_SHORT).show();
 
         //ID's
         recyclerviewforgallery = findViewById(R.id.recyclerviewforgallery);
