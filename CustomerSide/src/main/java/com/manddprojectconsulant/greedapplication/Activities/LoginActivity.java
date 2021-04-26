@@ -107,8 +107,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 Intent i = new Intent(LoginActivity.this, DashboardActivity.class);
                                 startActivity(i);
-                                Toast.makeText(LoginActivity.this, "Welcome to our Dashboard", Toast.LENGTH_SHORT).show();
-                            }
+                                      }
 
 
                         }

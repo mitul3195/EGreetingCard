@@ -57,7 +57,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         //SharedPreference
         sharedPreferences = getSharedPreferences("session", Context.MODE_PRIVATE);
-        Toast.makeText(this, "Username" + sharedPreferences.getString("uname", ""), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Welcome " + sharedPreferences.getString("uname","")+" to E Greeting App", Toast.LENGTH_SHORT).show();
 
         //ID's
         GridLayoutManager layoutManager = new GridLayoutManager(DashboardActivity.this, 2);
