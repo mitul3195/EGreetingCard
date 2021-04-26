@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ import com.manddprojectconsulant.greedapplication.Adapter.AdapterforCategory;
 import com.manddprojectconsulant.greedapplication.Model.ModelforCategory;
 import com.manddprojectconsulant.greedapplication.PublicApi.APi;
 import com.manddprojectconsulant.greedapplication.R;
+import com.manddprojectconsulant.greedapplication.databinding.ActivityDashboardBinding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,35 +41,67 @@ public class DashboardActivity extends AppCompatActivity {
     List<ModelforCategory> list = new ArrayList<>();
     AdapterforCategory adapterforDashboard;
     SharedPreferences sharedPreferences;
+    ActivityDashboardBinding dashboardBinding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        dashboardBinding = ActivityDashboardBinding.inflate(getLayoutInflater());
+        setContentView(dashboardBinding.getRoot());
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+
         setTitle("E-Greeting");
-        setTitleColor(R.color.white);
-        // using toolbar as ActionBar
-        setSupportActionBar(toolbar);
+        setSupportActionBar(dashboardBinding.toolbar);
 
 
         //SharedPreference
         sharedPreferences = getSharedPreferences("session", Context.MODE_PRIVATE);
-        Toast.makeText(this, "Username"+sharedPreferences.toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Username" + sharedPreferences.getString("uname", ""), Toast.LENGTH_SHORT).show();
 
         //ID's
-        recyclerviewforgallery = findViewById(R.id.recyclerviewforgallery);
         GridLayoutManager layoutManager = new GridLayoutManager(DashboardActivity.this, 2);
-        recyclerviewforgallery.setLayoutManager(layoutManager);
-      //  recyclerviewforgallery.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+        dashboardBinding.recyclerviewforgallery.setLayoutManager(layoutManager);
 
-        //-------------------- Data Pass ----------------------
+        dashboardBinding.actionlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                logoutcode();
+
+            }
+        });
+
+
+
+        dashboardBinding.actionBackpressed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                onBackPressed();
+
+
+            }
+        });
+
+
 
         getAllData();
 
 
     }
+
+
+    @Override
+    public void onBackPressed() {
+
+        finishAffinity();
+
+        super.onBackPressed();
+    }
+
+
+
 
     private void getAllData() {
 
@@ -95,7 +129,7 @@ public class DashboardActivity extends AppCompatActivity {
 
 
                 adapterforDashboard = new AdapterforCategory(DashboardActivity.this, list);
-                recyclerviewforgallery.setAdapter(adapterforDashboard);
+                dashboardBinding.recyclerviewforgallery.setAdapter(adapterforDashboard);
 
 
             }
@@ -113,29 +147,6 @@ public class DashboardActivity extends AppCompatActivity {
 
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.logout, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == R.id.action_logout) {
-
-            logoutcode();
-            return true;
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }
 
     private void logoutcode() {
 

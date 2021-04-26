@@ -54,6 +54,14 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
+        if (sharedPreferences.getBoolean("s12", false) && !sharedPreferences.getString("username", "").isEmpty()) {
+            Intent admin = new Intent(LoginActivity.this, AdminDashboardActivity.class);
+            startActivity(admin);
+            finish();
+
+        }
+
+
         //ID's
         username_text = findViewById(R.id.username_edittext);
         password_text = findViewById(R.id.password_edittext);
@@ -67,29 +75,27 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-
-                String username=username_text.getText().toString();
-                String password=password_text.getText().toString();
-
-
-                if (username.equals("Admin")&& password.equals("admin@123"))
-                {
-
-                    Intent admin=new Intent(LoginActivity.this,AdminDashboardActivity.class);
-                    admin.putExtra("username",username);
-                    startActivity(admin);
+                String username = username_text.getText().toString();
+                String password = password_text.getText().toString();
 
 
-                }else{
+                if (username.equals("Admin") && password.equals("admin@123")) {
+
+
+                    sharedPreferences.edit().putString("username", username_text.getText().toString()).apply();
+                    sharedPreferences.edit().putBoolean("s12", true).apply();
+                    Intent i = new Intent(LoginActivity.this, AdminDashboardActivity.class);
+                    startActivity(i);
+
+
+                } else {
 
 
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, APi.Login, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
 
-                            Log.d("TAG", "onResponse: "+response.toString());
-
-
+                            Log.d("TAG", "onResponse: " + response.toString());
 
 
                             if (response.trim().equals("0")) {
@@ -135,13 +141,7 @@ public class LoginActivity extends AppCompatActivity {
                     queue.add(stringRequest);
 
 
-
-
                 }
-
-
-
-
 
 
             }
