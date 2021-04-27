@@ -72,6 +72,10 @@ dependencies {
     //photoview
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 
+
+    //Image Upload in server
+    implementation'net.gotev:uploadservice:3.2.3'
+
     //Permission
     implementation 'com.karumi:dexter:6.2.2'
 

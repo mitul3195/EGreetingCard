@@ -55,10 +55,14 @@ public class DiwaliGalleryActivity extends AppCompatActivity {
                         JSONObject object=array.getJSONObject(i);
                         SubCategory model=new SubCategory();
                         model.setImage(object.getString("image"));
+                        model.setId(object.getString("id"));
                         list.add(model);
 
+                       // Toast.makeText(DiwaliGalleryActivity.this, ""+model.getId()+model.getImage(), Toast.LENGTH_SHORT).show();
 
                     }
+
+
 
                     AdapterforsubCategory adapterforsubCategory=new AdapterforsubCategory(DiwaliGalleryActivity.this,list);
                     diwaliGalleryBinding.diwaliRecycler.setAdapter(adapterforsubCategory);

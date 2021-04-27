@@ -44,19 +44,10 @@ public class AdapterforsubCategory extends RecyclerView.Adapter<AdapterforsubCat
     @Override
     public void onBindViewHolder(@NonNull Myholder holder, int position) {
 
-        Picasso.get()
-                .load(list.get(position).getImage())
-                .into(holder.imageforsubcategory, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        MaterialImageLoading.animate(holder.imageforsubcategory).setDuration(2000).start();
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-
-                    }
-                });
+       Picasso.get().load(list.get(position).getImage())
+               .placeholder(R.drawable.loading)
+               .error(R.drawable.ic_launcher_background)
+               .into(holder.imageforsubcategory);
 
 
         holder.imageforsubcategory.setOnClickListener(new View.OnClickListener() {
