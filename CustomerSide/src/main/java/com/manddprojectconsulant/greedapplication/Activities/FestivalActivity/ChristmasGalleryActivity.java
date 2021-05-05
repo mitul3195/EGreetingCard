@@ -53,7 +53,7 @@ public class ChristmasGalleryActivity extends AppCompatActivity {
                 {
                     JSONObject object=array.getJSONObject(i);
                     SubCategory subCategory=new SubCategory();
-                    subCategory.setImage(object.getString("image"));
+                    subCategory.setUrl(object.getString("url"));
                     list.add(subCategory);
 
                 }

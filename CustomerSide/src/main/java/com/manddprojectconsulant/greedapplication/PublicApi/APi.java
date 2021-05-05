@@ -10,7 +10,21 @@ public class APi {
     public static final String Diwali="https://videostram.000webhostapp.com/Egreeting/diwaligalleryview.php";
     public static final String Holi="https://videostram.000webhostapp.com/Egreeting/holigalleryview.php";
     public static final String Krishna="https://videostram.000webhostapp.com/Egreeting/krishnagalleryview.php";
+
+
+    //Admin
     public static final String Diwalimageupload="https://videostram.000webhostapp.com/serverimage/diwalimageupload.php";
+    public static final String Holiimageupload="https://videostram.000webhostapp.com/serverimage/holiimageupload.php";
+    public static final String Krishnaimageupload="https://videostram.000webhostapp.com/serverimage/krishnaimageupload.php";
+    public static final String Merryimageupload="https://videostram.000webhostapp.com/serverimage/merichristmasimageupload.php";
+
+    //Admin View
+
+    public static final String DiwalimageGet="https://videostram.000webhostapp.com/serverimage/getDiwaliImages.php";
+    public static final String HoliimageGet="https://videostram.000webhostapp.com/serverimage/getholiimage.php";
+    public static final String KrishnaimageGet="https://videostram.000webhostapp.com/serverimage/getkrishnaimage.php";
+    public static final String MerryimageGet="https://videostram.000webhostapp.com/serverimage/getmerichristmasimage.php";
+
 
 
 

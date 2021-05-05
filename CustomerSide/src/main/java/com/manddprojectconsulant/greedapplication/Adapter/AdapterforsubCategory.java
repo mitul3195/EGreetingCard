@@ -44,7 +44,7 @@ public class AdapterforsubCategory extends RecyclerView.Adapter<AdapterforsubCat
     @Override
     public void onBindViewHolder(@NonNull Myholder holder, int position) {
 
-       Picasso.get().load(list.get(position).getImage())
+       Picasso.get().load(list.get(position).getUrl())
                .placeholder(R.drawable.loading)
                .error(R.drawable.ic_launcher_background)
                .into(holder.imageforsubcategory);
@@ -58,7 +58,7 @@ public class AdapterforsubCategory extends RecyclerView.Adapter<AdapterforsubCat
 
 
                 Intent detailImage=new Intent(context, DetailImageActivity.class);
-                detailImage.putExtra("diwaliimage",list.get(position).getImage());
+                detailImage.putExtra("diwaliimage",list.get(position).getUrl());
                 context.startActivity(detailImage);
 
 

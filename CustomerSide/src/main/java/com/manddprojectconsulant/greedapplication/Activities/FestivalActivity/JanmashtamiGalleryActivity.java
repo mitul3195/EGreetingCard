@@ -50,7 +50,7 @@ public class JanmashtamiGalleryActivity extends AppCompatActivity {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject object = array.getJSONObject(i);
                         SubCategory model = new SubCategory();
-                        model.setImage(object.getString("image"));
+                        model.setUrl(object.getString("url"));
                         list.add(model);
 
 

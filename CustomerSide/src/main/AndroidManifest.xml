@@ -15,7 +15,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Greed">
-        <activity android:name=".Activities.AdminDashboardActivity"></activity>
+        <activity android:name=".Admin.AdminChrstmasImageUploadActivity"></activity>
+        <activity android:name=".Admin.AdminKrishnaImageUploadActivity" />
+        <activity android:name=".Admin.AdminHoliImageUploadActivity" />
+        <activity android:name=".Admin.AdminDashboardActivity" />
+        <activity android:name=".Admin.AdminDiwaliImageUploadActivity" />
         <activity android:name=".Activities.DetailImageActivity" />
         <activity android:name=".Activities.FestivalActivity.JanmashtamiGalleryActivity" />
         <activity android:name=".Activities.FestivalActivity.ChristmasGalleryActivity" />

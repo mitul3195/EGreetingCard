@@ -54,7 +54,7 @@ public class DiwaliGalleryActivity extends AppCompatActivity {
                     {
                         JSONObject object=array.getJSONObject(i);
                         SubCategory model=new SubCategory();
-                        model.setImage(object.getString("image"));
+                        model.setUrl(object.getString("url"));
                         model.setId(object.getString("id"));
                         list.add(model);
 
