@@ -50,9 +50,10 @@ public class AdminDiwaliImageUploadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityAdminImageuploadBinding = ActivityAdminImageuploadBinding.inflate(getLayoutInflater());
         setContentView(activityAdminImageuploadBinding.getRoot());
+        setSupportActionBar(activityAdminImageuploadBinding.admintoolbar);
 
 
-        //SharedPreference
+        activityAdminImageuploadBinding.diwalitext.setText("Diwali Images");
 
 
         //gallery image selection
@@ -66,56 +67,22 @@ public class AdminDiwaliImageUploadActivity extends AppCompatActivity {
             }
         });
 
+        activityAdminImageuploadBinding.actionBackpressed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         //fetch from server
         activityAdminImageuploadBinding.getImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                LinearLayoutManager manager = new LinearLayoutManager(AdminDiwaliImageUploadActivity.this);
-                activityAdminImageuploadBinding.listforadminimage.setLayoutManager(manager);
+                Intent getimage=new Intent(AdminDiwaliImageUploadActivity.this,AdminListImageActivity.class);
+                getimage.putExtra("diwali",activityAdminImageuploadBinding.diwalitext.getText().toString());
+                startActivity(getimage);
 
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, APi.DiwalimageGet, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-
-                        try {
-                            JSONArray array = new JSONArray(response);
-
-                            for (int i = 0; i < array.length(); i++) {
-                                JSONObject object = array.getJSONObject(i);
-                                SubCategory model = new SubCategory();
-                                model.setUrl(object.getString("url"));
-                                model.setName(object.getString("name"));
-                                list.add(model);
-
-                                // Toast.makeText(DiwaliGalleryActivity.this, ""+model.getId()+model.getImage(), Toast.LENGTH_SHORT).show();
-
-                            }
-
-
-                            AdapterforAdmin adapterforAdmin = new AdapterforAdmin(getApplicationContext(), list);
-                            activityAdminImageuploadBinding.listforadminimage.setAdapter(adapterforAdmin);
-
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        Toast.makeText(AdminDiwaliImageUploadActivity.this, "Fault in Internet" + error.getMessage(), Toast.LENGTH_SHORT).show();
-
-
-                    }
-                });
-
-                RequestQueue queue = Volley.newRequestQueue(AdminDiwaliImageUploadActivity.this);
-                queue.add(stringRequest);
 
 
             }
@@ -189,5 +156,15 @@ public class AdminDiwaliImageUploadActivity extends AppCompatActivity {
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Intent i=new Intent(AdminDiwaliImageUploadActivity.this,AdminDashboardActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(i);
+        overridePendingTransition(0,0);
+        super.onBackPressed();
     }
 }

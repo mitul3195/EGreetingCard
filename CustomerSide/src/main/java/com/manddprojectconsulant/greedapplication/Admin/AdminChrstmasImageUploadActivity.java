@@ -44,7 +44,18 @@ public class AdminChrstmasImageUploadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityAdminChrstmasImageUploadBinding = ActivityAdminChrstmasImageUploadBinding.inflate(getLayoutInflater());
         setContentView(activityAdminChrstmasImageUploadBinding.getRoot());
+        setSupportActionBar(activityAdminChrstmasImageUploadBinding.admintoolbar);
 
+        activityAdminChrstmasImageUploadBinding.christmastext.setText("Christmas Images");
+
+        activityAdminChrstmasImageUploadBinding.actionBackpressed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                onBackPressed();
+
+            }
+        });
 
         //gallery image selection
         activityAdminChrstmasImageUploadBinding.gallery.setOnClickListener(new View.OnClickListener() {
@@ -62,51 +73,10 @@ public class AdminChrstmasImageUploadActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                LinearLayoutManager manager = new LinearLayoutManager(AdminChrstmasImageUploadActivity.this);
-                activityAdminChrstmasImageUploadBinding.listforadminimage.setLayoutManager(manager);
 
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, APi.MerryimageGet, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-
-                        try {
-                            JSONArray array = new JSONArray(response);
-
-                            for (int i = 0; i < array.length(); i++) {
-                                JSONObject object = array.getJSONObject(i);
-                                SubCategory model = new SubCategory();
-                                model.setUrl(object.getString("url"));
-                                model.setName(object.getString("name"));
-                                list.add(model);
-
-                                // Toast.makeText(DiwaliGalleryActivity.this, ""+model.getId()+model.getImage(), Toast.LENGTH_SHORT).show();
-
-                            }
-
-
-                            AdapterforAdmin adapterforAdmin = new AdapterforAdmin(getApplicationContext(), list);
-                            activityAdminChrstmasImageUploadBinding.listforadminimage.setAdapter(adapterforAdmin);
-
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        Toast.makeText(AdminChrstmasImageUploadActivity.this, "Fault in Internet" + error.getMessage(), Toast.LENGTH_SHORT).show();
-
-
-                    }
-                });
-
-                RequestQueue queue = Volley.newRequestQueue(AdminChrstmasImageUploadActivity.this);
-                queue.add(stringRequest);
+                Intent christmas=new Intent(AdminChrstmasImageUploadActivity.this,AdminListImageActivity.class);
+                christmas.putExtra("christmas",activityAdminChrstmasImageUploadBinding.christmastext.getText().toString());
+                startActivity(christmas);
 
 
             }
@@ -179,5 +149,15 @@ public class AdminChrstmasImageUploadActivity extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+    @Override
+    public void onBackPressed() {
+
+        Intent i=new Intent(AdminChrstmasImageUploadActivity.this,AdminDashboardActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(i);
+        overridePendingTransition(0,0);
+        super.onBackPressed();
+    }
+
 
 }

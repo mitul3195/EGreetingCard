@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.manddprojectconsulant.greedapplication.Admin.AdminDashboardActivity;
 import com.manddprojectconsulant.greedapplication.Admin.AdminDiwaliImageUploadActivity;
+import com.manddprojectconsulant.greedapplication.Admin.AdminOption;
 import com.manddprojectconsulant.greedapplication.PublicApi.APi;
 import com.manddprojectconsulant.greedapplication.R;
 
@@ -55,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         if (sharedPreferences.getBoolean("s12", false) && !sharedPreferences.getString("username", "").isEmpty()) {
-            Intent admin = new Intent(LoginActivity.this, AdminDashboardActivity.class);
+            Intent admin = new Intent(LoginActivity.this, AdminOption.class);
             startActivity(admin);
             finish();
 
@@ -84,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     sharedPreferences.edit().putString("username", username_text.getText().toString()).apply();
                     sharedPreferences.edit().putBoolean("s12", true).apply();
-                    Intent i = new Intent(LoginActivity.this, AdminDashboardActivity.class);
+                    Intent i = new Intent(LoginActivity.this, AdminOption.class);
                     startActivity(i);
 
 

@@ -43,7 +43,7 @@ public class AdminHoliImageUploadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         holiImageUploadBinding=ActivityAdminHoliImageUploadBinding.inflate(getLayoutInflater());
         setContentView(holiImageUploadBinding.getRoot());
-
+        //setSupportActionBar(holiImageUploadBinding.admintoolbar);
 
         //gallery
         holiImageUploadBinding.gallery.setOnClickListener(new View.OnClickListener() {
@@ -182,6 +182,16 @@ public class AdminHoliImageUploadActivity extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+    @Override
+    public void onBackPressed() {
+
+        Intent i=new Intent(AdminHoliImageUploadActivity.this,AdminDashboardActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(i);
+        overridePendingTransition(0,0);
+        super.onBackPressed();
+    }
+
 
 
 }

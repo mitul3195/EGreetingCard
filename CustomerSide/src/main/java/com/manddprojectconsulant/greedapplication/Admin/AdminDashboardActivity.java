@@ -16,7 +16,6 @@ import com.manddprojectconsulant.greedapplication.databinding.ActivityAdminDashb
 public class AdminDashboardActivity extends AppCompatActivity {
 
     ActivityAdminDashboardBinding activityAdminDashboardBinding;
-    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,30 +25,14 @@ public class AdminDashboardActivity extends AppCompatActivity {
         setSupportActionBar(activityAdminDashboardBinding.admintoolbar);
 
 
-        sharedPreferences = getSharedPreferences("session", Context.MODE_PRIVATE);
-        Toast.makeText(this, "Welcome " + sharedPreferences.getString("username", "") + " to E Greeting App", Toast.LENGTH_SHORT).show();
-
-
         activityAdminDashboardBinding.actionBackpressed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 onBackPressed();
 
-
             }
         });
-
-
-        activityAdminDashboardBinding.actionLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                logoutcode();
-
-            }
-        });
-
 
         activityAdminDashboardBinding.diwaliCarview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,16 +95,13 @@ public class AdminDashboardActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        finishAffinity();
+        Intent i=new Intent(AdminDashboardActivity.this,AdminOption.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(i);
+        overridePendingTransition(0,0);
         super.onBackPressed();
     }
 
 
-    private void logoutcode() {
 
-        sharedPreferences.edit().clear().commit();
-        Intent i = new Intent(AdminDashboardActivity.this, LoginActivity.class);
-        startActivity(i);
-
-    }
 }

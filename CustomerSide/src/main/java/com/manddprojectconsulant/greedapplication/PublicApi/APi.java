@@ -24,6 +24,7 @@ public class APi {
     public static final String HoliimageGet="https://videostram.000webhostapp.com/serverimage/getholiimage.php";
     public static final String KrishnaimageGet="https://videostram.000webhostapp.com/serverimage/getkrishnaimage.php";
     public static final String MerryimageGet="https://videostram.000webhostapp.com/serverimage/getmerichristmasimage.php";
+    public static final String Userlist="https://videostram.000webhostapp.com/Egreeting/userlist.php";
 
 
 
