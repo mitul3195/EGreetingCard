@@ -31,35 +31,32 @@ public class AdminListImageActivity extends AppCompatActivity {
 
     ActivityAdminListImageBinding activityAdminListImageBinding;
     List<SubCategory> list = new ArrayList<>();
-    String christmasname,diwaliname,holiname,krishname;
+    String christmasname, diwaliname, holiname, krishname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityAdminListImageBinding=ActivityAdminListImageBinding.inflate(getLayoutInflater());
+        activityAdminListImageBinding = ActivityAdminListImageBinding.inflate(getLayoutInflater());
         setContentView(activityAdminListImageBinding.getRoot());
 
         LinearLayoutManager manager = new LinearLayoutManager(AdminListImageActivity.this);
         activityAdminListImageBinding.listforadminimage.setLayoutManager(manager);
 
 
-
         activityAdminListImageBinding.listtext.setText("List Data");
-
 
 
         //Christmas Data
 
-        christmasname=getIntent().getExtras().getString("christmas");
+        christmasname = getIntent().getExtras().getString("christmas");
 
-        if (christmasname.equals("Christmas Images"))
-        {
+        if (christmasname != null) {
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, APi.MerryimageGet, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
 
-                    Log.d("TAG", "onResponse: "+response.toString());
+                    Log.d("TAG", "onResponse: " + response.toString());
 
 
                     try {
@@ -105,11 +102,10 @@ public class AdminListImageActivity extends AppCompatActivity {
 
 
         //Diwali Data
-        diwaliname=getIntent().getExtras().getString("diwali");
-/*
+        diwaliname = getIntent().getExtras().getString("diwali");
 
-        if (diwaliname.equals("Diwali Images"))
-        {
+
+        if (diwaliname != null) {
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, APi.DiwalimageGet, new Response.Listener<String>() {
                 @Override
@@ -155,9 +151,7 @@ public class AdminListImageActivity extends AppCompatActivity {
             queue.add(stringRequest);
 
 
-
         }
-*/
 
 
         activityAdminListImageBinding.actionBackpressed.setOnClickListener(new View.OnClickListener() {
@@ -172,8 +166,107 @@ public class AdminListImageActivity extends AppCompatActivity {
 
         //Holi Data
 
+        holiname = getIntent().getExtras().getString("holi");
+        if (holiname != null) {
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, APi.HoliimageGet, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
 
 
+                    try {
+                        JSONArray array = new JSONArray(response);
+
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject object = array.getJSONObject(i);
+                            SubCategory model = new SubCategory();
+                            model.setUrl(object.getString("url"));
+                            model.setName(object.getString("name"));
+                            list.add(model);
+
+                            // Toast.makeText(DiwaliGalleryActivity.this, ""+model.getId()+model.getImage(), Toast.LENGTH_SHORT).show();
+
+                        }
+
+
+                        AdapterforAdmin adapterforAdmin = new AdapterforAdmin(getApplicationContext(), list);
+                        activityAdminListImageBinding.listforadminimage.setAdapter(adapterforAdmin);
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    Toast.makeText(AdminListImageActivity.this, "Fault in Internet" + error.getMessage(), Toast.LENGTH_SHORT).show();
+
+
+                }
+            });
+
+            RequestQueue queue = Volley.newRequestQueue(AdminListImageActivity.this);
+            queue.add(stringRequest);
+
+
+        }
+
+
+        //Krishna Data
+
+
+       krishname=getIntent().getExtras().getString("a");
+        if (krishname != null) {
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, APi.Krishna, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+
+
+                    try {
+                        JSONArray array = new JSONArray(response);
+
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject object = array.getJSONObject(i);
+                            SubCategory model = new SubCategory();
+                            model.setUrl(object.getString("url"));
+                            model.setName(object.getString("name"));
+                            list.add(model);
+
+                            // Toast.makeText(DiwaliGalleryActivity.this, ""+model.getId()+model.getImage(), Toast.LENGTH_SHORT).show();
+
+                        }
+
+
+                        AdapterforAdmin adapterforAdmin = new AdapterforAdmin(getApplicationContext(), list);
+                        activityAdminListImageBinding.listforadminimage.setAdapter(adapterforAdmin);
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    Toast.makeText(AdminListImageActivity.this, "Fault in Internet" + error.getMessage(), Toast.LENGTH_SHORT).show();
+
+
+                }
+            });
+
+            RequestQueue queue = Volley.newRequestQueue(AdminListImageActivity.this);
+            queue.add(stringRequest);
+
+
+        }
 
 
     }

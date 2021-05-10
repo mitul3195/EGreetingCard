@@ -26,6 +26,10 @@ public class APi {
     public static final String MerryimageGet="https://videostram.000webhostapp.com/serverimage/getmerichristmasimage.php";
     public static final String Userlist="https://videostram.000webhostapp.com/Egreeting/userlist.php";
 
+    //Update Password
+    public static final String UpdatePassword="https://videostram.000webhostapp.com/Egreeting/UpdatePassword.php";
+    public static final String EmailVerfied="https://videostram.000webhostapp.com/Egreeting/EmailVerfied.php";
+
 
 
 

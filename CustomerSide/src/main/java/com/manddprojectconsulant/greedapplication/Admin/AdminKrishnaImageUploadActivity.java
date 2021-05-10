@@ -45,6 +45,11 @@ public class AdminKrishnaImageUploadActivity extends AppCompatActivity {
         activityAdminKrishnaImageUploadBinding = ActivityAdminKrishnaImageUploadBinding.inflate(getLayoutInflater());
         setContentView(activityAdminKrishnaImageUploadBinding.getRoot());
 
+        LinearLayoutManager manager = new LinearLayoutManager(AdminKrishnaImageUploadActivity.this);
+        activityAdminKrishnaImageUploadBinding.listforadminimage.setLayoutManager(manager);
+
+        activityAdminKrishnaImageUploadBinding.krishnatext.setText("Krishna Images");
+
 
         //gallery image selection
         activityAdminKrishnaImageUploadBinding.gallery.setOnClickListener(new View.OnClickListener() {
@@ -62,56 +67,24 @@ public class AdminKrishnaImageUploadActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                LinearLayoutManager manager = new LinearLayoutManager(AdminKrishnaImageUploadActivity.this);
-                activityAdminKrishnaImageUploadBinding.listforadminimage.setLayoutManager(manager);
+                String a= activityAdminKrishnaImageUploadBinding.krishnatext.getText().toString();
 
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, APi.KrishnaimageGet, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-
-                        try {
-                            JSONArray array = new JSONArray(response);
-
-                            for (int i = 0; i < array.length(); i++) {
-                                JSONObject object = array.getJSONObject(i);
-                                SubCategory model = new SubCategory();
-                                model.setUrl(object.getString("url"));
-                                model.setName(object.getString("name"));
-                                list.add(model);
-
-                                // Toast.makeText(DiwaliGalleryActivity.this, ""+model.getId()+model.getImage(), Toast.LENGTH_SHORT).show();
-
-                            }
-
-
-                            AdapterforAdmin adapterforAdmin = new AdapterforAdmin(getApplicationContext(), list);
-                            activityAdminKrishnaImageUploadBinding.listforadminimage.setAdapter(adapterforAdmin);
-
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        Toast.makeText(AdminKrishnaImageUploadActivity.this, "Fault in Internet" + error.getMessage(), Toast.LENGTH_SHORT).show();
-
-
-                    }
-                });
-
-                RequestQueue queue = Volley.newRequestQueue(AdminKrishnaImageUploadActivity.this);
-                queue.add(stringRequest);
+                Intent getimage = new Intent(AdminKrishnaImageUploadActivity.this, AdminListImageActivity.class);
+                getimage.putExtra("a",a);
+                startActivity(getimage);
 
 
             }
         });
 
+        activityAdminKrishnaImageUploadBinding.actionBackpressed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                onBackPressed();
+
+            }
+        });
 
         activityAdminKrishnaImageUploadBinding.uploadfiles.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,13 +154,14 @@ public class AdminKrishnaImageUploadActivity extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
     @Override
     public void onBackPressed() {
 
-        Intent i=new Intent(AdminKrishnaImageUploadActivity.this,AdminDashboardActivity.class);
+        Intent i = new Intent(AdminKrishnaImageUploadActivity.this, AdminDashboardActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(i);
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
         super.onBackPressed();
     }
 }

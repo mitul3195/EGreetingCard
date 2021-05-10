@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
 
     TextInputEditText username_text, password_text;
     ImageView ivSign_button;
-    TextView donothaveaccount_text;
+    TextView donothaveaccount_text,forgetpassword_text;
     SharedPreferences sharedPreferences;
 
     @Override
@@ -68,6 +68,8 @@ public class LoginActivity extends AppCompatActivity {
         password_text = findViewById(R.id.password_edittext);
         ivSign_button = findViewById(R.id.signin_image);
         donothaveaccount_text = findViewById(R.id.donothaveaccount_text);
+        forgetpassword_text=findViewById(R.id.forgetpassword_text);
+
 
         //Image work as a button
 
@@ -157,7 +159,23 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+        forgetpassword_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i=new Intent(LoginActivity.this,UpdatePassword.class);
+                startActivity(i);
+
+
+
+            }
+        });
+
+
     }
+
+
+
 
     @Override
     public void onBackPressed() {

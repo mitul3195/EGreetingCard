@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -14,7 +16,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.manddprojectconsulant.greedapplication.Activities.DashboardActivity;
 import com.manddprojectconsulant.greedapplication.Adapter.AdapterforsubCategory;
+import com.manddprojectconsulant.greedapplication.Admin.AdminDashboardActivity;
+import com.manddprojectconsulant.greedapplication.Admin.AdminHoliImageUploadActivity;
 import com.manddprojectconsulant.greedapplication.Model.SubCategory;
 import com.manddprojectconsulant.greedapplication.PublicApi.APi;
 import com.manddprojectconsulant.greedapplication.R;
@@ -38,10 +43,27 @@ public class ChristmasGalleryActivity extends AppCompatActivity {
 
         christmasGalleryBinding=ActivityChristmasGalleryBinding.inflate(getLayoutInflater());
         setContentView(christmasGalleryBinding.getRoot());
+        setSupportActionBar(christmasGalleryBinding.admintoolbar);
+
+
+
+
+
+        christmasGalleryBinding.actionBackpressed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                onBackPressed();
+
+
+            }
+        });
+
 
         LinearLayoutManager layoutManager=new GridLayoutManager(this,2);
         christmasGalleryBinding.christmasRecycler.setLayoutManager(layoutManager);
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, APi.MerryChristmas, new Response.Listener<String>() {
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, APi.MerryimageGet, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -86,4 +108,17 @@ public class ChristmasGalleryActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+
+        Intent i = new Intent(ChristmasGalleryActivity.this, DashboardActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(i);
+        overridePendingTransition(0, 0);
+        super.onBackPressed();
+    }
+
+
+
 }

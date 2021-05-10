@@ -38,12 +38,18 @@ public class AdminHoliImageUploadActivity extends AppCompatActivity {
     int SELECT_PICTURE = 200;
     List<SubCategory> list = new ArrayList<>();
     Uri filepath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        holiImageUploadBinding=ActivityAdminHoliImageUploadBinding.inflate(getLayoutInflater());
+        holiImageUploadBinding = ActivityAdminHoliImageUploadBinding.inflate(getLayoutInflater());
         setContentView(holiImageUploadBinding.getRoot());
-        //setSupportActionBar(holiImageUploadBinding.admintoolbar);
+        setSupportActionBar(holiImageUploadBinding.admintoolbar);
+
+        LinearLayoutManager manager = new LinearLayoutManager(AdminHoliImageUploadActivity.this);
+        holiImageUploadBinding.listforadminimage.setLayoutManager(manager);
+
+        holiImageUploadBinding.holitext.setText("Holi Images");
 
         //gallery
         holiImageUploadBinding.gallery.setOnClickListener(new View.OnClickListener() {
@@ -56,56 +62,21 @@ public class AdminHoliImageUploadActivity extends AppCompatActivity {
             }
         });
 
+        holiImageUploadBinding.actionBackpressed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
 
         holiImageUploadBinding.getImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                LinearLayoutManager manager = new LinearLayoutManager(AdminHoliImageUploadActivity.this);
-                holiImageUploadBinding.listforadminimage.setLayoutManager(manager);
-
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, APi.HoliimageGet, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-
-                        try {
-                            JSONArray array = new JSONArray(response);
-
-                            for (int i = 0; i < array.length(); i++) {
-                                JSONObject object = array.getJSONObject(i);
-                                SubCategory model = new SubCategory();
-                                model.setUrl(object.getString("url"));
-                                model.setName(object.getString("name"));
-                                list.add(model);
-
-                                // Toast.makeText(DiwaliGalleryActivity.this, ""+model.getId()+model.getImage(), Toast.LENGTH_SHORT).show();
-
-                            }
-
-
-                            AdapterforAdmin adapterforAdmin = new AdapterforAdmin(getApplicationContext(), list);
-                            holiImageUploadBinding.listforadminimage.setAdapter(adapterforAdmin);
-
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        Toast.makeText(AdminHoliImageUploadActivity.this, "Fault in Internet" + error.getMessage(), Toast.LENGTH_SHORT).show();
-
-
-                    }
-                });
-
-                RequestQueue queue = Volley.newRequestQueue(AdminHoliImageUploadActivity.this);
-                queue.add(stringRequest);
+                Intent getimage = new Intent(AdminHoliImageUploadActivity.this, AdminListImageActivity.class);
+                getimage.putExtra("holi", holiImageUploadBinding.holitext.getText().toString());
+                startActivity(getimage);
 
 
             }
@@ -136,9 +107,6 @@ public class AdminHoliImageUploadActivity extends AppCompatActivity {
 
             }
         });
-
-
-
 
 
     }
@@ -182,16 +150,16 @@ public class AdminHoliImageUploadActivity extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
     @Override
     public void onBackPressed() {
 
-        Intent i=new Intent(AdminHoliImageUploadActivity.this,AdminDashboardActivity.class);
+        Intent i = new Intent(AdminHoliImageUploadActivity.this, AdminDashboardActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(i);
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
         super.onBackPressed();
     }
-
 
 
 }

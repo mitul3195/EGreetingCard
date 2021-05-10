@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -14,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.manddprojectconsulant.greedapplication.Activities.DashboardActivity;
 import com.manddprojectconsulant.greedapplication.Adapter.AdapterforsubCategory;
 import com.manddprojectconsulant.greedapplication.Model.SubCategory;
 import com.manddprojectconsulant.greedapplication.PublicApi.APi;
@@ -39,12 +42,23 @@ public class DiwaliGalleryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         diwaliGalleryBinding=ActivityDiwaliGalleryBinding.inflate(getLayoutInflater());
         setContentView(diwaliGalleryBinding.getRoot());
+        setSupportActionBar(diwaliGalleryBinding.admintoolbar);
+
+        diwaliGalleryBinding.actionBackpressed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                onBackPressed();
+
+            }
+        });
+
 
 
         LinearLayoutManager layoutManager=new GridLayoutManager(this,2);
         diwaliGalleryBinding.diwaliRecycler.setLayoutManager(layoutManager);
 
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, APi.Diwali, new Response.Listener<String>() {
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, APi.DiwalimageGet, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -100,4 +114,15 @@ public class DiwaliGalleryActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+
+        Intent i = new Intent(DiwaliGalleryActivity.this, DashboardActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(i);
+        overridePendingTransition(0, 0);
+        super.onBackPressed();
+    }
+
 }

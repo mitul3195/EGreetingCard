@@ -7,8 +7,56 @@
     android:orientation="vertical"
     tools:context=".Admin.AdminHoliImageUploadActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:fitsSystemWindows="true">
 
-    <com.google.android.material.card.MaterialCardView
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/admintoolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleTextColor="@color/white">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/action_backpressed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_backpressed" />
+
+                <TextView
+                    android:id="@+id/holitext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select Categories"
+                    android:textSize="20sp"
+                    android:padding="10dp"
+                    android:textColor="@color/dark_cyan"
+                    android:layout_marginStart="10dp"
+                    android:layout_toRightOf="@id/action_backpressed"/>
+
+
+
+
+            </RelativeLayout>
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/cardview"
         android:layout_width="300dp"
         android:layout_height="250dp"
@@ -51,7 +99,7 @@
 
         </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 
 
     <LinearLayout

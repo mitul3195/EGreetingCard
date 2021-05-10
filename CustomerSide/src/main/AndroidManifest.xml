@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Greed">
-        <activity android:name=".Admin.AdminListImageActivity"></activity>
+        <activity android:name=".Activities.UpdatePassword"></activity>
+        <activity android:name=".Admin.AdminListImageActivity" />
         <activity android:name=".Admin.UserListActivity" />
         <activity android:name=".Admin.AdminOption" />
         <activity android:name=".Admin.AdminChrstmasImageUploadActivity" />

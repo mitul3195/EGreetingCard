@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 import com.github.chrisbanes.photoview.PhotoView;
 import com.github.florent37.materialimageloading.MaterialImageLoading;
+import com.manddprojectconsulant.greedapplication.Activities.FestivalActivity.JanmashtamiGalleryActivity;
 import com.manddprojectconsulant.greedapplication.R;
+import com.manddprojectconsulant.greedapplication.databinding.ActivityDetailImageBinding;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -27,26 +29,35 @@ import java.io.ByteArrayOutputStream;
 public class DetailImageActivity extends AppCompatActivity {
 
     String diwali_image;
-    PhotoView festivalimageview;
-    ImageButton downloadbutton,sharebutton;
+    ActivityDetailImageBinding detailImageBinding;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_image);
+        detailImageBinding=ActivityDetailImageBinding.inflate(getLayoutInflater());
+        setContentView(detailImageBinding.getRoot());
+        setSupportActionBar(detailImageBinding.admintoolbar);
 
-        diwali_image=getIntent().getStringExtra("diwaliimage");
+        diwali_image=getIntent().getStringExtra("detailimages");
 
-        //ID's
-        festivalimageview=findViewById(R.id.festival_imageview);
-        downloadbutton=findViewById(R.id.download_button);
-        sharebutton=findViewById(R.id.share_button);
 
-        Picasso.get().load(diwali_image).placeholder(R.drawable.loading).into(festivalimageview, new Callback() {
+        detailImageBinding.actionBackpressed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+
+;
+
+        Picasso.get().load(diwali_image).placeholder(R.drawable.loading).into(detailImageBinding.festivalImageview, new Callback() {
             @Override
             public void onSuccess() {
 
-                MaterialImageLoading.animate(festivalimageview).setDuration(1000).start();
+                MaterialImageLoading.animate(detailImageBinding.festivalImageview).setDuration(1000).start();
 
             }
 
@@ -58,7 +69,7 @@ public class DetailImageActivity extends AppCompatActivity {
 
 
         //Share Function
-        sharebutton.setOnClickListener(new View.OnClickListener() {
+       detailImageBinding.shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -91,7 +102,7 @@ public class DetailImageActivity extends AppCompatActivity {
 
 
         //Download function
-        downloadbutton.setOnClickListener(new View.OnClickListener() {
+       detailImageBinding.downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -129,4 +140,12 @@ public class DetailImageActivity extends AppCompatActivity {
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), bitmapInImage, "Greetings", null);
         return Uri.parse(path);
     }
+
+
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
+    }
+
 }

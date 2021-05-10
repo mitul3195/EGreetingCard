@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -13,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.manddprojectconsulant.greedapplication.Activities.DashboardActivity;
 import com.manddprojectconsulant.greedapplication.Adapter.AdapterforsubCategory;
 import com.manddprojectconsulant.greedapplication.Model.SubCategory;
 import com.manddprojectconsulant.greedapplication.PublicApi.APi;
@@ -37,11 +40,21 @@ public class JanmashtamiGalleryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         janmashtamiGalleryBinding = ActivityJanmashtamiGalleryBinding.inflate(getLayoutInflater());
         setContentView(janmashtamiGalleryBinding.getRoot());
+        setSupportActionBar(janmashtamiGalleryBinding.admintoolbar);
+
+
+
+        janmashtamiGalleryBinding.actionBackpressed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         LinearLayoutManager layoutManager = new GridLayoutManager(this, 2);
         janmashtamiGalleryBinding.krishnaRecycler.setLayoutManager(layoutManager);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, APi.Krishna, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, APi.KrishnaimageGet, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -80,4 +93,14 @@ public class JanmashtamiGalleryActivity extends AppCompatActivity {
 
 
     }
+    @Override
+    public void onBackPressed() {
+
+        Intent i = new Intent(JanmashtamiGalleryActivity.this, DashboardActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(i);
+        overridePendingTransition(0, 0);
+        super.onBackPressed();
+    }
+
 }

@@ -23,20 +23,20 @@ import java.util.List;
 
 public class AdapterforsubCategory extends RecyclerView.Adapter<AdapterforsubCategory.Myholder> {
 
-    List<SubCategory>list;
+    List<SubCategory> list;
     Context context;
 
     public AdapterforsubCategory(Context context, List<SubCategory> list) {
-        this.context=context;
-        this.list=list;
+        this.context = context;
+        this.list = list;
     }
 
     @NonNull
     @Override
     public Myholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        LayoutInflater inflater=LayoutInflater.from(context);
-        View view=inflater.inflate(R.layout.designforsubcategory,parent,false);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.designforsubcategory, parent, false);
 
         return new Myholder(view);
     }
@@ -44,29 +44,19 @@ public class AdapterforsubCategory extends RecyclerView.Adapter<AdapterforsubCat
     @Override
     public void onBindViewHolder(@NonNull Myholder holder, int position) {
 
-       Picasso.get().load(list.get(position).getUrl())
-               .placeholder(R.drawable.loading)
-               .error(R.drawable.ic_launcher_background)
-               .into(holder.imageforsubcategory);
-
+        Picasso.get().load(list.get(position).getUrl()).placeholder(R.drawable.loading).into(holder.imageforsubcategory);
 
         holder.imageforsubcategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
-
-
                 Intent detailImage=new Intent(context, DetailImageActivity.class);
-                detailImage.putExtra("diwaliimage",list.get(position).getUrl());
+                detailImage.putExtra("detailimages",list.get(position).getUrl());
                 context.startActivity(detailImage);
 
 
             }
         });
-
-
-
 
     }
 
@@ -78,11 +68,12 @@ public class AdapterforsubCategory extends RecyclerView.Adapter<AdapterforsubCat
     public class Myholder extends RecyclerView.ViewHolder {
 
         ImageView imageforsubcategory;
+
         public Myholder(@NonNull View itemView) {
             super(itemView);
 
 
-            imageforsubcategory=itemView.findViewById(R.id.imageforsubcategory);
+            imageforsubcategory = itemView.findViewById(R.id.imageforsubcategory);
 
 
         }
