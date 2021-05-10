@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     ImageView ivSign_button;
     TextView donothaveaccount_text,forgetpassword_text;
     SharedPreferences sharedPreferences;
+    Boolean IsAdmin=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,68 +83,76 @@ public class LoginActivity extends AppCompatActivity {
                 String password = password_text.getText().toString();
 
 
-                if (username.equals("Admin") && password.equals("admin@123")) {
+
+                    if (username.equals("Admin") && password.equals("admin@123")) {
 
 
-                    sharedPreferences.edit().putString("username", username_text.getText().toString()).apply();
-                    sharedPreferences.edit().putBoolean("s12", true).apply();
-                    Intent i = new Intent(LoginActivity.this, AdminOption.class);
-                    startActivity(i);
+                        sharedPreferences.edit().putString("username", username_text.getText().toString()).apply();
+                        sharedPreferences.edit().putBoolean("s12", true).apply();
+                        Intent i = new Intent(LoginActivity.this, AdminOption.class);
+                        startActivity(i);
 
 
-                } else {
+                    } else {
+
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, APi.Login, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+
+                                Log.d("TAG", "onResponse: " + response.toString());
 
 
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, APi.Login, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
+                                if (response.trim().equals("0")) {
 
-                            Log.d("TAG", "onResponse: " + response.toString());
+                                    Toast.makeText(LoginActivity.this, "Fail please check username and password", Toast.LENGTH_SHORT).show();
 
-
-                            if (response.trim().equals("0")) {
-
-                                Toast.makeText(LoginActivity.this, "Fail please check username and password", Toast.LENGTH_SHORT).show();
-
-                            } else {
+                                } else {
 
 
-                                Intent i = new Intent(LoginActivity.this, DashboardActivity.class);
-                                startActivity(i);
-                                      }
+                                    Intent i = new Intent(LoginActivity.this, DashboardActivity.class);
+                                    startActivity(i);
+                                }
 
 
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
 
-                            Toast.makeText(LoginActivity.this, "Fault in Internet" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Fault in Internet" + error.getMessage(), Toast.LENGTH_SHORT).show();
 
-                        }
-                    }) {
-
-
-                        @Nullable
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-
-                            HashMap map = new HashMap();
-                            map.put("uname", username_text.getText().toString());
-                            map.put("pass", password_text.getText().toString());
-
-                            sharedPreferences.edit().putString("uname", String.valueOf(map)).apply();
-                            sharedPreferences.edit().putBoolean("s1", true).apply();
-
-                            return map;
-                        }
-                    };
-
-                    RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-                    queue.add(stringRequest);
+                            }
+                        }) {
 
 
-                }
+                            @Nullable
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+
+                                HashMap map = new HashMap();
+                                map.put("uname", username_text.getText().toString());
+                                map.put("pass", password_text.getText().toString());
+
+                                sharedPreferences.edit().putString("uname", String.valueOf(map)).apply();
+                                sharedPreferences.edit().putBoolean("s1", true).apply();
+
+                                return map;
+                            }
+                        };
+
+                        RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+                        queue.add(stringRequest);
+
+
+
+
+                    }
+
+
+
+
+
+
 
 
             }

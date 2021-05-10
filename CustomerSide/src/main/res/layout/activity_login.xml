@@ -53,6 +53,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:padding="10dp"
+        app:passwordToggleEnabled="true"
         app:boxStrokeColor="@color/light_cyan">
 
         <com.google.android.material.textfield.TextInputEditText

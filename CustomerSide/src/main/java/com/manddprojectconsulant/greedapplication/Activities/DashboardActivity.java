@@ -49,8 +49,6 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         dashboardBinding = ActivityDashboardBinding.inflate(getLayoutInflater());
         setContentView(dashboardBinding.getRoot());
-
-
         setTitle("E-Greeting");
         setSupportActionBar(dashboardBinding.toolbar);
 
