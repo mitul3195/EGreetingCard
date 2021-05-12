@@ -2,7 +2,18 @@ package com.manddprojectconsulant.greedapplication.Model;
 
 public class UserModel {
 
-    String id,name,phone;
+    String id;
+    String name;
+    String phone;
+    String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getId() {
         return id;

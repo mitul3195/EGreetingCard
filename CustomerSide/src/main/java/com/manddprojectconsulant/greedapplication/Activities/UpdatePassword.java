@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -17,9 +18,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.manddprojectconsulant.greedapplication.Model.UserModel;
 import com.manddprojectconsulant.greedapplication.PublicApi.APi;
 import com.manddprojectconsulant.greedapplication.R;
 import com.manddprojectconsulant.greedapplication.databinding.ActivityUpdatePasswordBinding;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +33,7 @@ import java.util.Map;
 public class UpdatePassword extends AppCompatActivity {
 
     ActivityUpdatePasswordBinding updatePasswordBinding;
-    String password;
+    String password,id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,61 +41,100 @@ public class UpdatePassword extends AppCompatActivity {
         updatePasswordBinding = ActivityUpdatePasswordBinding.inflate(getLayoutInflater());
         setContentView(updatePasswordBinding.getRoot());
 
-        updatePasswordBinding.email.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-                verifiedEmail();
-            }
-        });
 
         updatePasswordBinding.updatePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                password=updatePasswordBinding.password.getText().toString();
+                password = updatePasswordBinding.password.getText().toString();
 
-                StringRequest stringRequest=new StringRequest(Request.Method.POST, APi.UpdatePassword, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+                ViewData();
 
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }){
-
-                    @Nullable
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-
-                        HashMap map=new HashMap();
-                      /*  map.put("id", id);
-                        map.put("product_name", productnameText.getText().toString().trim());
-*/
-
-                        return map;
-                    }
-                };
-
-
-
+                verifiedEmail();
 
 
             }
         });
+
+    }
+
+    private void ViewData() {
+
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, APi.Userlist, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                JSONArray array= null;
+                try {
+                    array = new JSONArray(response);
+                    for (int i=0;i<array.length();i++) {
+
+                        JSONObject object = array.getJSONObject(i);
+                        UserModel model=new UserModel();
+
+                        id=object.getString("id");
+                        model.setId(id);
+
+
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(UpdatePassword.this, "Fault in Internet"+error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        RequestQueue requestQueue = Volley.newRequestQueue(UpdatePassword.this);
+        requestQueue.add(stringRequest);
+
+
+    }
+
+    private void ForgetUpdatePassword() {
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, APi.UpdatePassword, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Log.d("UpdatePassword",response.toString());
+                Toast.makeText(UpdatePassword.this, "Update Done Successfully", Toast.LENGTH_SHORT).show();
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(UpdatePassword.this, "Fault in Internet" + error.getMessage(), Toast.LENGTH_SHORT).show();
+
+
+            }
+        }) {
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                HashMap map=new HashMap();
+                map.put("id",id);
+                map.put("password",password);
+                map.put("email",updatePasswordBinding.email.getText().toString());
+                return map;
+
+
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(UpdatePassword.this);
+        requestQueue.add(stringRequest);
 
     }
 
@@ -101,11 +146,12 @@ public class UpdatePassword extends AppCompatActivity {
                 if (response.trim().equals("0")) {
 
                     updatePasswordBinding.email.setError("Not Match");
+                } else {
+
+                    ForgetUpdatePassword();
+
                 }
-                else{
-                    updatePasswordBinding.password.setVisibility(View.VISIBLE);
-                    updatePasswordBinding.confirmpassword.setVisibility(View.VISIBLE);
-                }
+
 
             }
         }, new Response.ErrorListener() {
@@ -131,8 +177,6 @@ public class UpdatePassword extends AppCompatActivity {
 
 
     }
-
-
 
 
 }
